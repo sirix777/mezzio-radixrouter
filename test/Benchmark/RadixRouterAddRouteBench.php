@@ -9,11 +9,13 @@ use Mezzio\Router\Route;
 use PhpBench\Attributes\BeforeMethods;
 use PhpBench\Attributes\Iterations;
 use PhpBench\Attributes\Revs;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Psr\Http\Message\ResponseInterface;
 use Sirix\Mezzio\Router\RadixRouter;
+
+use function sprintf;
 
 /**
  * Benchmarks for the RadixRouter route addition operation.
@@ -109,9 +111,9 @@ class RadixRouterAddRouteBench
     public function benchAddMultipleRoutes(): void
     {
         $router = clone $this->router;
-        
+
         // Add 10 routes with different patterns
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 10; ++$i) {
             $router->addRoute(new Route(
                 sprintf('/api/resource-%d/:id', $i),
                 $this->middleware,
@@ -129,7 +131,7 @@ class RadixRouterAddRouteBench
     public function benchAddRoutesWithSamePathDifferentMethods(): void
     {
         $router = clone $this->router;
-        
+
         $router->addRoute(new Route('/api/users/:id', $this->middleware, [RequestMethod::METHOD_GET], 'users.get'));
         $router->addRoute(new Route('/api/users/:id', $this->middleware, [RequestMethod::METHOD_PUT], 'users.update'));
         $router->addRoute(new Route('/api/users/:id', $this->middleware, [RequestMethod::METHOD_DELETE], 'users.delete'));
@@ -141,10 +143,8 @@ class RadixRouterAddRouteBench
     private function getMiddleware(): MiddlewareInterface
     {
         return new class implements MiddlewareInterface {
-            public function process(
-                ServerRequestInterface $request,
-                RequestHandlerInterface $handler
-            ): ResponseInterface {
+            public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+            {
                 return $handler->handle($request);
             }
         };

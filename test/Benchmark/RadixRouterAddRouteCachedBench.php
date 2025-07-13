@@ -9,12 +9,18 @@ use Mezzio\Router\Route;
 use PhpBench\Attributes\BeforeMethods;
 use PhpBench\Attributes\Iterations;
 use PhpBench\Attributes\Revs;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Psr\Http\Message\ResponseInterface;
 use Sirix\Mezzio\Router\Enum\CacheConfig;
 use Sirix\Mezzio\Router\RadixRouter;
+
+use function file_exists;
+use function sprintf;
+use function sys_get_temp_dir;
+use function uniqid;
+use function unlink;
 
 /**
  * Benchmarks for the RadixRouter route addition operation with caching enabled.
@@ -26,17 +32,27 @@ class RadixRouterAddRouteCachedBench
     private MiddlewareInterface $middleware;
     private string $cacheFile;
 
+    /**
+     * Clean up the cache file after the benchmark.
+     */
+    public function __destruct()
+    {
+        if (file_exists($this->cacheFile)) {
+            @unlink($this->cacheFile);
+        }
+    }
+
     public function setUp(): void
     {
         // Create a temporary cache file
         $this->cacheFile = sys_get_temp_dir() . '/radix-router-add-route-cache-' . uniqid() . '.php';
-        
+
         // Initialize router with caching enabled
         $this->router = new RadixRouter(config: [
             CacheConfig::Enabled->value => true,
             CacheConfig::File->value => $this->cacheFile,
         ]);
-        
+
         $this->middleware = $this->getMiddleware();
     }
 
@@ -119,9 +135,9 @@ class RadixRouterAddRouteCachedBench
     public function benchAddMultipleRoutes(): void
     {
         $router = clone $this->router;
-        
+
         // Add 10 routes with different patterns
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 10; ++$i) {
             $router->addRoute(new Route(
                 sprintf('/api/resource-%d/:id', $i),
                 $this->middleware,
@@ -139,7 +155,7 @@ class RadixRouterAddRouteCachedBench
     public function benchAddRoutesWithSamePathDifferentMethods(): void
     {
         $router = clone $this->router;
-        
+
         $router->addRoute(new Route('/api/users/:id', $this->middleware, [RequestMethod::METHOD_GET], 'users.get'));
         $router->addRoute(new Route('/api/users/:id', $this->middleware, [RequestMethod::METHOD_PUT], 'users.update'));
         $router->addRoute(new Route('/api/users/:id', $this->middleware, [RequestMethod::METHOD_DELETE], 'users.delete'));
@@ -151,22 +167,10 @@ class RadixRouterAddRouteCachedBench
     private function getMiddleware(): MiddlewareInterface
     {
         return new class implements MiddlewareInterface {
-            public function process(
-                ServerRequestInterface $request,
-                RequestHandlerInterface $handler
-            ): ResponseInterface {
+            public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+            {
                 return $handler->handle($request);
             }
         };
-    }
-    
-    /**
-     * Clean up the cache file after the benchmark.
-     */
-    public function __destruct()
-    {
-        if (file_exists($this->cacheFile)) {
-            @unlink($this->cacheFile);
-        }
     }
 }

@@ -11,12 +11,17 @@ use Mezzio\Router\Route;
 use PhpBench\Attributes\BeforeMethods;
 use PhpBench\Attributes\Iterations;
 use PhpBench\Attributes\Revs;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Psr\Http\Message\ResponseInterface;
 use Sirix\Mezzio\Router\Enum\CacheConfig;
 use Sirix\Mezzio\Router\RadixRouter;
+
+use function file_exists;
+use function sys_get_temp_dir;
+use function uniqid;
+use function unlink;
 
 /**
  * Benchmarks for the RadixRouter match operation with caching enabled.
@@ -26,6 +31,16 @@ class RadixRouterMatchCachedBench
 {
     private RadixRouter $router;
     private string $cacheFile;
+
+    /**
+     * Clean up the cache file after the benchmark.
+     */
+    public function __destruct()
+    {
+        if (file_exists($this->cacheFile)) {
+            @unlink($this->cacheFile);
+        }
+    }
 
     public function setUp(): void
     {
@@ -133,6 +148,7 @@ class RadixRouterMatchCachedBench
     private function createServerRequest(string $path, string $method): ServerRequestInterface
     {
         $uri = new Uri($path);
+
         return new ServerRequest([], [], $uri, $method);
     }
 
@@ -142,22 +158,10 @@ class RadixRouterMatchCachedBench
     private function getMiddleware(): MiddlewareInterface
     {
         return new class implements MiddlewareInterface {
-            public function process(
-                ServerRequestInterface $request,
-                RequestHandlerInterface $handler
-            ): ResponseInterface {
+            public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+            {
                 return $handler->handle($request);
             }
         };
-    }
-    
-    /**
-     * Clean up the cache file after the benchmark.
-     */
-    public function __destruct()
-    {
-        if (file_exists($this->cacheFile)) {
-            @unlink($this->cacheFile);
-        }
     }
 }

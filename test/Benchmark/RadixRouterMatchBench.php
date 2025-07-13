@@ -11,10 +11,10 @@ use Mezzio\Router\Route;
 use PhpBench\Attributes\BeforeMethods;
 use PhpBench\Attributes\Iterations;
 use PhpBench\Attributes\Revs;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Psr\Http\Message\ResponseInterface;
 use Sirix\Mezzio\Router\RadixRouter;
 
 /**
@@ -123,6 +123,7 @@ class RadixRouterMatchBench
     private function createServerRequest(string $path, string $method): ServerRequestInterface
     {
         $uri = new Uri($path);
+
         return new ServerRequest([], [], $uri, $method);
     }
 
@@ -132,10 +133,8 @@ class RadixRouterMatchBench
     private function getMiddleware(): MiddlewareInterface
     {
         return new class implements MiddlewareInterface {
-            public function process(
-                ServerRequestInterface $request,
-                RequestHandlerInterface $handler
-            ): ResponseInterface {
+            public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+            {
                 return $handler->handle($request);
             }
         };

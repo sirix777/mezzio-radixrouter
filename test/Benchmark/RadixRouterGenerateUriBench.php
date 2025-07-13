@@ -9,10 +9,10 @@ use Mezzio\Router\Route;
 use PhpBench\Attributes\BeforeMethods;
 use PhpBench\Attributes\Iterations;
 use PhpBench\Attributes\Revs;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Psr\Http\Message\ResponseInterface;
 use Sirix\Mezzio\Router\RadixRouter;
 
 /**
@@ -26,7 +26,7 @@ class RadixRouterGenerateUriBench
     public function setUp(): void
     {
         $this->router = new RadixRouter();
-        
+
         // Add a variety of routes to benchmark against
         $this->router->addRoute(new Route('/api/users', $this->getMiddleware(), [RequestMethod::METHOD_GET], 'users.list'));
         $this->router->addRoute(new Route('/api/users/:id', $this->getMiddleware(), [RequestMethod::METHOD_GET], 'users.get'));
@@ -35,11 +35,11 @@ class RadixRouterGenerateUriBench
         $this->router->addRoute(new Route('/api/posts/:id', $this->getMiddleware(), [RequestMethod::METHOD_GET], 'posts.get'));
         $this->router->addRoute(new Route('/api/posts/:id/comments', $this->getMiddleware(), [RequestMethod::METHOD_GET], 'posts.comments'));
         $this->router->addRoute(new Route('/api/posts/:id/comments/:commentId', $this->getMiddleware(), [RequestMethod::METHOD_GET], 'posts.comments.get'));
-        
+
         // Add routes with optional parameters
         $this->router->addRoute(new Route('/api/search/:query?', $this->getMiddleware(), [RequestMethod::METHOD_GET], 'search'));
         $this->router->addRoute(new Route('/api/filter/:category?/:subcategory?', $this->getMiddleware(), [RequestMethod::METHOD_GET], 'filter'));
-        
+
         // Add routes with complex patterns
         $this->router->addRoute(new Route('/api/products/:category/:subcategory?/:id?', $this->getMiddleware(), [RequestMethod::METHOD_GET], 'products'));
         $this->router->addRoute(new Route('/api/articles/:year/:month?/:day?/:slug?', $this->getMiddleware(), [RequestMethod::METHOD_GET], 'articles'));
@@ -74,7 +74,7 @@ class RadixRouterGenerateUriBench
     {
         $this->router->generateUri('posts.comments.get', [
             'id' => '123',
-            'commentId' => '456'
+            'commentId' => '456',
         ]);
     }
 
@@ -107,7 +107,7 @@ class RadixRouterGenerateUriBench
     {
         $this->router->generateUri('filter', [
             'category' => 'electronics',
-            'subcategory' => 'laptops'
+            'subcategory' => 'laptops',
         ]);
     }
 
@@ -131,10 +131,8 @@ class RadixRouterGenerateUriBench
     private function getMiddleware(): MiddlewareInterface
     {
         return new class implements MiddlewareInterface {
-            public function process(
-                ServerRequestInterface $request,
-                RequestHandlerInterface $handler
-            ): ResponseInterface {
+            public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+            {
                 return $handler->handle($request);
             }
         };
