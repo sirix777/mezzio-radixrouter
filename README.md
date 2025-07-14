@@ -83,7 +83,7 @@ return [
     'router' => [
         'radix' => [
             CacheConfig::Enabled->value => true,
-            CacheConfig::File->value => 'data/cache/radex-cache.php',
+            CacheConfig::File->value => 'data/cache/radix-cache.php',
         ],
     ]
 ];
