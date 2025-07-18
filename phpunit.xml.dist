@@ -15,6 +15,7 @@
     <testsuites>
         <testsuite name="unit">
             <directory>./test</directory>
+            <exclude>test/RadixRouter/BaseRadixRouterTest.php</exclude>
         </testsuite>
     </testsuites>
 
