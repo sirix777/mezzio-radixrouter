@@ -64,13 +64,6 @@ class RadixRouter implements RouterInterface
     private array $routes = [];
 
     /**
-     * Cached route parameters by route name.
-     *
-     * @var array<string, array<string>>
-     */
-    private array $routeParams = [];
-
-    /**
      * True if cache is enabled and valid dispatch data has been loaded from the cache.
      */
     private bool $hasCache = false;
@@ -286,16 +279,7 @@ class RadixRouter implements RouterInterface
     {
         $route = &$this->routes[$result['handler']];
 
-        $paramNames = &$this->getRouteParams($route->getName(), $route->getPath());
-
-        $namedParams = [];
-        foreach ($result['params'] ?? [] as $index => $value) {
-            if (isset($paramNames[$index])) {
-                $namedParams[$paramNames[$index]] = $value;
-            }
-        }
-
-        return RouteResult::fromRoute($route, $namedParams);
+        return RouteResult::fromRoute($route, $result['params'] ?? []);
     }
 
     /**
@@ -332,8 +316,6 @@ class RadixRouter implements RouterInterface
             $this->router->tree = $this->dispatchData['tree'] ?? [];
             $this->router->static = $this->dispatchData['static'] ?? [];
 
-            $this->routeParams = $this->dispatchData['params'] ?? [];
-
             return;
         }
 
@@ -355,36 +337,12 @@ class RadixRouter implements RouterInterface
         }
 
         $this->routes[$route->getName()] = $route;
-        $this->routeParams[$route->getName()] = $this->getRouteParams(
-            $route->getName(),
-            $route->getPath()
-        );
 
         if ($this->hasCache) {
             return;
         }
 
         $this->router->add($methods, $route->getPath(), $route->getName());
-    }
-
-    /**
-     * Get route parameters for a given route.
-     *
-     * @param string $routeName Name of the route
-     * @param string $path      Route path
-     *
-     * @return array<string> Reference to the array of parameter names
-     */
-    private function &getRouteParams(string $routeName, string $path): array
-    {
-        if (isset($this->routeParams[$routeName])) {
-            return $this->routeParams[$routeName];
-        }
-
-        [$paramNames] = $this->extractRouteParameters($path);
-        $this->routeParams[$routeName] = $paramNames;
-
-        return $this->routeParams[$routeName];
     }
 
     /**
@@ -442,7 +400,6 @@ class RadixRouter implements RouterInterface
         $dispatchData = [
             'tree' => $this->router->tree,
             'static' => $this->router->static,
-            'params' => $this->routeParams,
         ];
 
         $this->ensureCacheDirectoryExists();

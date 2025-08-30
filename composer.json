@@ -24,10 +24,9 @@
         "mezzio/mezzio-router": "^3.14 || ^4.0.1",
         "psr/container": "^1.0 || ^2.0",
         "psr/http-message": "^1.0.1 || ^2.0.0",
-        "wilaak/radix-router": "^2.1"
+        "wilaak/radix-router": "^3.0"
     },
     "require-dev": {
-        "ergebnis/composer-normalize": "^2.47",
         "laminas/laminas-diactoros": "^3.5.0",
         "laminas/laminas-stratigility": "^4.1.0",
         "mikey179/vfsstream": "^1.6.12",
@@ -45,9 +44,6 @@
         }
     },
     "config": {
-        "allow-plugins": {
-            "ergebnis/composer-normalize": true
-        },
         "sort-packages": true
     },
     "extra": {
@@ -73,8 +69,8 @@
             "@phpstan",
             "@test"
         ],
-        "cs-check": "PHP_CS_FIXER_IGNORE_ENV=1 php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run -vvv --diff",
-        "cs-fix": "PHP_CS_FIXER_IGNORE_ENV=1 php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix -vvv",
+        "cs-check": "php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run -vvv --diff",
+        "cs-fix": "php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix -vvv",
         "phpstan": "php tools/phpstan/vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=2G",
         "rector": "php tools/rector/vendor/bin/rector process --dry-run --memory-limit=2G",
         "test": [
