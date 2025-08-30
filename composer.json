@@ -27,7 +27,6 @@
         "wilaak/radix-router": "^3.0"
     },
     "require-dev": {
-        "ergebnis/composer-normalize": "^2.47",
         "laminas/laminas-diactoros": "^3.5.0",
         "laminas/laminas-stratigility": "^4.1.0",
         "mikey179/vfsstream": "^1.6.12",
@@ -45,9 +44,6 @@
         }
     },
     "config": {
-        "allow-plugins": {
-            "ergebnis/composer-normalize": true
-        },
         "sort-packages": true
     },
     "extra": {
