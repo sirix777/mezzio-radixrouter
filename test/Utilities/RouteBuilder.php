@@ -23,7 +23,7 @@ class RouteBuilder
      */
     public static function simple(string $path, ?string $name = null): Route
     {
-        return new Route($path, self::getMiddleware(), [RequestMethod::METHOD_GET], $name);
+        return self::createRoute($path, [RequestMethod::METHOD_GET], $name);
     }
 
     /**
@@ -32,7 +32,7 @@ class RouteBuilder
      */
     public static function withMethods(string $path, array $methods, ?string $name = null): Route
     {
-        return new Route($path, self::getMiddleware(), $methods, $name);
+        return self::createRoute($path, $methods, $name);
     }
 
     /**
@@ -40,7 +40,7 @@ class RouteBuilder
      */
     public static function withParams(string $path, ?string $name = null): Route
     {
-        return new Route($path, self::getMiddleware(), [RequestMethod::METHOD_GET], $name);
+        return self::createRoute($path, [RequestMethod::METHOD_GET], $name);
     }
 
     /**
@@ -48,7 +48,7 @@ class RouteBuilder
      */
     public static function wildcard(string $path, ?string $name = null): Route
     {
-        return new Route($path, self::getMiddleware(), [RequestMethod::METHOD_GET], $name);
+        return self::createRoute($path, [RequestMethod::METHOD_GET], $name);
     }
 
     /**
@@ -56,7 +56,7 @@ class RouteBuilder
      */
     public static function post(string $path, ?string $name = null): Route
     {
-        return new Route($path, self::getMiddleware(), [RequestMethod::METHOD_POST], $name);
+        return self::createRoute($path, [RequestMethod::METHOD_POST], $name);
     }
 
     /**
@@ -64,7 +64,7 @@ class RouteBuilder
      */
     public static function put(string $path, ?string $name = null): Route
     {
-        return new Route($path, self::getMiddleware(), [RequestMethod::METHOD_PUT], $name);
+        return self::createRoute($path, [RequestMethod::METHOD_PUT], $name);
     }
 
     /**
@@ -72,7 +72,7 @@ class RouteBuilder
      */
     public static function delete(string $path = '/', ?string $name = null): Route
     {
-        return new Route($path, self::getMiddleware(), [RequestMethod::METHOD_DELETE], $name);
+        return self::createRoute($path, [RequestMethod::METHOD_DELETE], $name);
     }
 
     /**
@@ -80,7 +80,18 @@ class RouteBuilder
      */
     public static function any(string $path = '/', ?string $name = null): Route
     {
-        return new Route($path, self::getMiddleware(), null, $name);
+        return self::createRoute($path, null, $name);
+    }
+
+    /**
+     * Centralized route creation to avoid duplication.
+     *
+     * @param non-empty-string  $path
+     * @param null|list<string> $methods
+     */
+    private static function createRoute(string $path, ?array $methods, ?string $name): Route
+    {
+        return new Route($path, self::getMiddleware(), $methods, $name);
     }
 
     private static function getMiddleware(): MiddlewareInterface
