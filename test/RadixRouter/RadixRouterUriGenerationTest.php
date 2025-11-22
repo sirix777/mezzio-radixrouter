@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SirixTest\Mezzio\Router\RadixRouter;
 
 use Fig\Http\Message\RequestMethodInterface as RequestMethod;
+use InvalidArgumentException;
 use Mezzio\Router\Route;
 use PHPUnit\Framework\Attributes\DataProvider;
 use SirixTest\Mezzio\Router\Utilities\RouteBuilder;
@@ -31,13 +32,15 @@ class RadixRouterUriGenerationTest extends BaseRadixRouterTest
         $this->assertSame($expected, $uri);
     }
 
-    public function testGenerateUriNormalizesPath(): void
+    public function testGenerateUriWithEmptySegmentsThrows(): void
     {
         $route = RouteBuilder::simple('/user//posts', 'user-posts');
         $this->router->addRoute($route);
 
-        $uri = $this->router->generateUri('user-posts');
-        $this->assertSame('/user/posts', $uri);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches('/Empty segments are not allowed/');
+
+        $this->router->generateUri('user-posts');
     }
 
     public function testGenerateUriHandlesRootPath(): void

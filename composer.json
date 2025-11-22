@@ -18,20 +18,22 @@
         }
     ],
     "require": {
-        "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
-        "fig/http-message-util": "^1.1.2",
-        "laminas/laminas-stdlib": "^3.19.0",
-        "mezzio/mezzio-router": "^3.14 || ^4.0.1",
+        "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+        "fig/http-message-util": "^1.1.5",
+        "mezzio/mezzio-router": "^4.1",
         "psr/container": "^1.0 || ^2.0",
         "psr/http-message": "^1.0.1 || ^2.0.0",
-        "wilaak/radix-router": "^3.0"
+        "wilaak/radix-router": "^3.5"
     },
     "require-dev": {
-        "laminas/laminas-diactoros": "^3.5.0",
-        "laminas/laminas-stratigility": "^4.1.0",
+        "bamarni/composer-bin-plugin": "^1.8",
+        "laminas/laminas-diactoros": "^3.8.0",
+        "laminas/laminas-stratigility": "^4.3.0",
         "mikey179/vfsstream": "^1.6.12",
-        "phpbench/phpbench": "^1.2",
-        "phpunit/phpunit": "^12"
+        "phpbench/phpbench": "^1.4",
+        "phpunit/phpunit": "^11.5",
+        "psr/http-server-handler": "^1.0",
+        "psr/http-server-middleware": "^1.0"
     },
     "autoload": {
         "psr-4": {
@@ -44,9 +46,17 @@
         }
     },
     "config": {
+        "allow-plugins": {
+            "bamarni/composer-bin-plugin": true
+        },
         "sort-packages": true
     },
     "extra": {
+        "bamarni-bin": {
+            "bin-links": false,
+            "forward-command": true,
+            "target-directory": "tools"
+        },
         "laminas": {
             "config-provider": [
                 "Sirix\\Mezzio\\Router\\RadixRouter\\ConfigProvider"
@@ -54,14 +64,7 @@
         }
     },
     "scripts": {
-        "post-install-cmd": [
-            "if [ ! -d \"tools/php-cs-fixer/vendor\" ]; then composer install --working-dir=tools/php-cs-fixer; fi",
-            "if [ ! -d \"tools/phpstan/vendor\" ]; then composer install --working-dir=tools/phpstan; fi",
-            "if [ ! -d \"tools/rector/vendor\" ]; then composer install --working-dir=tools/rector; fi"
-        ],
-        "post-update-cmd": [
-            "@tools-update"
-        ],
+        "analyse-deps": "tools/composer-dependency-analyser/vendor/bin/composer-dependency-analyser",
         "bench": "php vendor/bin/phpbench run test/Benchmark --report=default",
         "check": [
             "@cs-check",
@@ -71,20 +74,13 @@
         ],
         "cs-check": "php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run -vvv --diff",
         "cs-fix": "php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix -vvv",
+        "normalize": "@composer bin composer-normalize normalize --diff ../../composer.json",
         "phpstan": "php tools/phpstan/vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=2G",
         "rector": "php tools/rector/vendor/bin/rector process --dry-run --memory-limit=2G",
         "test": [
             "@test-unit"
         ],
         "test-coverage": "phpunit test/unit --colors=always --coverage-clover clover.xml",
-        "test-unit": "php vendor/bin/phpunit --testsuite=unit --testdox",
-        "tools-update": [
-            "@tools-update-csfix",
-            "@tools-update-phpstan",
-            "@tools-update-rector"
-        ],
-        "tools-update-csfix": "composer update -W --working-dir=tools/php-cs-fixer",
-        "tools-update-phpstan": "composer update -W --working-dir=tools/phpstan",
-        "tools-update-rector": "composer update -W --working-dir=tools/rector"
+        "test-unit": "php vendor/bin/phpunit --testsuite=unit --testdox"
     }
 }
