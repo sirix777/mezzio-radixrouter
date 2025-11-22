@@ -49,17 +49,28 @@ trait RouteDataProviders
      */
     public static function pathNormalizationProvider(): iterable
     {
-        yield 'double-slash' => ['/user//posts', '/user/posts'];
-
-        yield 'triple-slash' => ['/user///posts', '/user/posts'];
+        // Empty segments (e.g., //) are no longer normalized; they now throw.
+        // See invalidRoutePatternsProvider() for those cases.
 
         yield 'trailing-slash' => ['/user/posts/', '/user/posts'];
-
-        yield 'multiple-trailing-slashes' => ['/user/posts///', '/user/posts'];
 
         yield 'empty-path' => ['', '/'];
 
         yield 'root-slash' => ['/', '/'];
+    }
+
+    /**
+     * Route patterns that contain empty segments must now trigger an exception.
+     *
+     * @return iterable<string, array{string}>
+     */
+    public static function invalidRoutePatternsProvider(): iterable
+    {
+        yield 'double-slash' => ['/user//posts'];
+
+        yield 'triple-slash' => ['/user///posts'];
+
+        yield 'multiple-trailing-slashes' => ['/user/posts///'];
     }
 
     /**

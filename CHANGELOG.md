@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.0] - 22/11/2025
+
+### Added
+- Official support for PHP 8.5 (composer `php` constraint updated)
+- Composer tooling: composer-normalize configuration and composer-dependency-analyser setup
+
+### Changed
+- Dependencies updated:
+    - `wilaak/radix-router` to `^3.5`
+    - `mezzio/mezzio-router` to `^4.1`
+- CI workflow improvements in `.github/workflows/php.yml`
+- Renamed config file from `config/autoload/radix-routes.global.php` to `config/autoload/radix-router.global.php` for consistency
+
+### Fixed
+- Test suite updates and refinements (providers and basic/URI generation tests) to align with dependency changes
+
+
 ## [3.0.0] - 30/08/2025
 
 ### Changed
