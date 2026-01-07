@@ -111,6 +111,6 @@ class RadixRouterUriGenerationTest extends BaseRadixRouterTest
 
         $putRequest = $this->createPutRequest('/api/data');
         $putResult = $this->router->match($putRequest);
-        $this->assertMethodNotAllowed($putResult, [RequestMethod::METHOD_GET, RequestMethod::METHOD_POST]);
+        $this->assertMethodNotAllowed($putResult, [RequestMethod::METHOD_GET, RequestMethod::METHOD_HEAD, RequestMethod::METHOD_POST]);
     }
 }

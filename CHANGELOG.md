@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.1.0] - 22/11/2025
+## [3.2.0] - 2026-01-07
+
+### Added
+- Automatic HEAD method injection for routes allowing GET
+
+## [3.1.0] - 2025-11-22
 
 ### Added
 - Official support for PHP 8.5 (composer `php` constraint updated)
@@ -22,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Test suite updates and refinements (providers and basic/URI generation tests) to align with dependency changes
 
 
-## [3.0.0] - 30/08/2025
+## [3.0.0] - 2025-08-30
 
 ### Changed
 - Upgrade to wilaak/radix-router v3.x bringing performance improvements and API stability
@@ -39,7 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Properly preserve router cached dispatch data and avoid duplicate injection when cache is present
 - More robust cache directory creation and writability checks with clear exceptions
 
-## [2.0.0] - 19/07/2025
+## [2.0.0] - 2025-07-19
 
 ### Changed
 - Upgraded to wilaak/radix-router v2.1
@@ -51,7 +56,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New test cases for basic routing, parameters, wildcards, URI generation, and error handling
 - Support for more complex routing scenarios
 
-## [1.0.0] - 13/07/2025
+## [1.0.0] - 2025-07-13
 
 ### Added
 - Initial release of RadixRouter integration for Mezzio

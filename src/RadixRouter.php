@@ -19,6 +19,7 @@ use function dirname;
 use function file_exists;
 use function file_put_contents;
 use function implode;
+use function in_array;
 use function is_array;
 use function is_dir;
 use function is_writable;
@@ -334,6 +335,11 @@ class RadixRouter implements RouterInterface
         // Convert null/empty methods to ANY
         if (null === $methods || [] === $methods) {
             $methods = $this->router->allowedMethods;
+        }
+
+        // inject HEAD
+        if (in_array('GET', $methods, true) && ! in_array('HEAD', $methods, true)) {
+            $methods[] = 'HEAD';
         }
 
         $this->routes[$route->getName()] = $route;

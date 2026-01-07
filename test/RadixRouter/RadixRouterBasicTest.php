@@ -41,6 +41,20 @@ class RadixRouterBasicTest extends BaseRadixRouterTest
         ;
     }
 
+    public function testMatchingHeadRouteShouldReturnSuccessfulRouteResultIfGetMethodIsAllowed(): void
+    {
+        $route = RouteBuilder::simple('/foo', 'foo-route');
+        $this->router->addRoute($route);
+
+        $request = $this->createServerRequest('/foo', RequestMethod::METHOD_HEAD);
+        $result = $this->router->match($request);
+
+        $this->assertRoute($result)
+            ->shouldSucceed()
+            ->withRouteName('foo-route')
+        ;
+    }
+
     public function testMatchFailureDueToHttpMethodReturnsRouteResultWithAllowedMethods(): void
     {
         $route = RouteBuilder::post('/foo', 'foo-post');
