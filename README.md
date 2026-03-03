@@ -1,6 +1,10 @@
 # Mezzio RadixRouter
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Latest Stable Version](http://poser.pugx.org/sirix/mezzio-radixrouter/v)](https://packagist.org/packages/sirix/mezzio-radixrouter)
+[![Total Downloads](http://poser.pugx.org/sirix/mezzio-radixrouter/downloads)](https://packagist.org/packages/sirix/mezzio-radixrouter)
+[![Latest Unstable Version](http://poser.pugx.org/sirix/mezzio-radixrouter/v/unstable)](https://packagist.org/packages/sirix/mezzio-radixrouter)
+[![License](http://poser.pugx.org/sirix/mezzio-radixrouter/license)](https://packagist.org/packages/sirix/mezzio-radixrouter)
+[![PHP Version Require](http://poser.pugx.org/sirix/mezzio-radixrouter/require/php)](https://packagist.org/packages/sirix/mezzio-radixrouter)
 
 RadixRouter integration for [Mezzio](https://docs.mezzio.dev/), providing high-performance HTTP routing using a radix tree algorithm.
 
@@ -129,6 +133,24 @@ return [
 ## Documentation
 
 For more information about routing in Mezzio, please refer to the [Mezzio routing documentation](https://docs.mezzio.dev/mezzio/v3/features/router/intro/).
+
+## Benchmarks
+
+Performance benchmarks comparing RadixRouter with other Mezzio routers (FastRoute, LaminasRouter) are available in the [benchmark-comparison](./benchmark-comparison) directory.
+
+For detailed results and methodology, see [benchmark-comparison/README.md](./benchmark-comparison/README.md).
+
+### Quick Results (33 routes, JIT=tracing)
+
+| Rank | Router                       | Lookups/sec   | Mem (KB)   | Register (ms)   |
+|------|------------------------------|---------------|------------|-----------------|
+|    1 | **MezzioRadixRouterCached**  |       668,375 |       44.9 |           0.128 |
+|    2 | **MezzioRadixRouter**        |       645,693 |      178.7 |           0.191 |
+|    3 | **MezzioFastRouteCached**    |       162,389 |       42.7 |           0.164 |
+|    4 | **MezzioFastRoute**          |        81,157 |      137.6 |           0.310 |
+|    5 | **MezzioLaminasRouter**      |        30,157 |      367.4 |           0.707 |
+
+MezzioRadixRouter is **~4x faster** than FastRoute and **~22x faster** than LaminasRouter in this test.
 
 ## License
 

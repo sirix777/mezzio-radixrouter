@@ -1,0 +1,36 @@
+{
+    "name": "sirix/benchmark-comparison",
+    "description": "Benchmark comparison: Mezzio routers (RadixRouter, FastRoute, LaminasRouter)",
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php": "8.2 - 8.5",
+        "psr/http-message": "^1.0 || ^2.0",
+        "psr/simple-cache": "^2.0 || ^3.0",
+        "nyholm/psr7": "^1.8",
+        "mezzio/mezzio-fastroute": "^3.14",
+        "mezzio/mezzio-laminasrouter": "^3.12",
+        "sirix/mezzio-radixrouter": "^3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sirix\\Router\\RadixRouter\\BenchmarkComparison\\": "Routers"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "bench": "php bench.php",
+        "bench:all": "php bench.php --all",
+        "bench:simple": "php bench.php --suite=simple",
+        "bench:avatax": "php bench.php --suite=avatax",
+        "bench:bitbucket": "php bench.php --suite=bitbucket",
+        "bench:huge": "php bench.php --suite=huge",
+        "bench:mezzio": "php bench.php --router=MezzioFastRouteAdapter,MezzioLaminasRouterAdapter,MezzioRadixRouterAdapter",
+        "bench:mezzio-cached": "php bench.php --router=MezzioFastRouteCachedAdapter,MezzioRadixRouterCachedAdapter",
+        "bench:mezzio-all": "php bench.php --router=MezzioFastRouteAdapter,MezzioFastRouteCachedAdapter,MezzioLaminasRouterAdapter,MezzioRadixRouterAdapter,MezzioRadixRouterCachedAdapter",
+        "bench:jit": "php bench.php --mode=JIT=tracing",
+        "bench:opcache": "php bench.php --mode=OPcache",
+        "bench:no-opcache": "php bench.php --mode=\"No OPcache\""
+    }
+}
