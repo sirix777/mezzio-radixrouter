@@ -159,93 +159,83 @@ The benchmark outputs a formatted table with the following columns:
 
 | Rank | Router                       | Mode               | Lookups/sec   | Mem (KB)   | Register (ms)   |
 |------|------------------------------|--------------------|---------------|------------|-----------------|
-|    1 | **MezzioRadixRouterCached**  | JIT=tracing        |       668,375 |       44.9 |           0.128 |
-|    2 | **MezzioRadixRouter**        | JIT=tracing        |       645,693 |      178.7 |           0.191 |
-|    3 | **MezzioRadixRouterCached**  | OPcache            |       515,493 |       43.0 |           0.132 |
-|    4 | **MezzioRadixRouter**        | OPcache            |       449,093 |      104.4 |           0.241 |
-|    5 | **MezzioRadixRouterCached**  | No OPcache         |       414,167 |      582.5 |           1.440 |
-|    6 | **MezzioRadixRouter**        | No OPcache         |       383,283 |      561.2 |           1.286 |
-|    7 | **MezzioFastRouteCached**    | JIT=tracing        |       162,389 |       42.7 |           0.164 |
-|    8 | **MezzioFastRouteCached**    | No OPcache         |       131,720 |      587.3 |           2.153 |
-|    9 | **MezzioFastRouteCached**    | OPcache            |       118,313 |       40.9 |           0.164 |
-|   10 | **MezzioFastRoute**          | JIT=tracing        |        81,157 |      137.6 |           0.310 |
-|   11 | **MezzioFastRoute**          | OPcache            |        65,578 |       59.6 |           0.341 |
-|   12 | **MezzioFastRoute**          | No OPcache         |        64,843 |      590.6 |           2.324 |
-|   13 | **MezzioLaminasRouter**      | JIT=tracing        |        30,157 |      367.4 |           0.707 |
-|   14 | **MezzioLaminasRouter**      | No OPcache         |        25,368 |     1543.5 |           9.524 |
-|   15 | **MezzioLaminasRouter**      | OPcache            |        20,493 |      235.8 |           0.850 |
+|    1 | **MezzioRadixRouterCached**  | JIT=tracing        |     1,279,430 |       45.1 |           0.073 |
+|    2 | **MezzioRadixRouter**        | JIT=tracing        |     1,256,213 |      178.7 |           0.149 |
+|    3 | **MezzioRadixRouter**        | OPcache            |       888,638 |      104.4 |           0.131 |
+|    4 | **MezzioRadixRouterCached**  | OPcache            |       885,149 |       43.2 |           0.081 |
+|    5 | **MezzioRadixRouter**        | No OPcache         |       761,096 |      558.2 |           0.800 |
+|    6 | **MezzioRadixRouterCached**  | No OPcache         |       754,229 |      579.5 |           0.923 |
+|    7 | **MezzioFastRouteCached**    | JIT=tracing        |       294,001 |       42.9 |           0.111 |
+|    8 | **MezzioFastRouteCached**    | OPcache            |       230,862 |       41.1 |           0.119 |
+|    9 | **MezzioFastRouteCached**    | No OPcache         |       221,530 |      583.9 |           1.516 |
+|   10 | **MezzioFastRoute**          | JIT=tracing        |       137,812 |      137.6 |           0.194 |
+|   11 | **MezzioFastRoute**          | OPcache            |       104,908 |       59.6 |           0.220 |
+|   12 | **MezzioFastRoute**          | No OPcache         |       103,747 |      587.2 |           1.688 |
+|   13 | **MezzioLaminasRouter**      | JIT=tracing        |        56,560 |      371.0 |           0.483 |
+|   14 | **MezzioLaminasRouter**      | OPcache            |        40,774 |      222.8 |           0.550 |
+|   15 | **MezzioLaminasRouter**      | No OPcache         |        40,195 |     1532.4 |           6.168 |
 
 #### avatax (256 routes)
 
 | Rank | Router                       | Mode               | Lookups/sec   | Mem (KB)   | Register (ms)   |
 |------|------------------------------|--------------------|---------------|------------|-----------------|
-|    1 | **MezzioRadixRouter**        | JIT=tracing        |       548,877 |      793.2 |           1.281 |
-|    2 | **MezzioRadixRouterCached**  | JIT=tracing        |       504,547 |      258.7 |           0.412 |
-|    3 | **MezzioRadixRouterCached**  | OPcache            |       418,746 |      258.7 |           0.484 |
-|    4 | **MezzioRadixRouter**        | OPcache            |       409,642 |      793.2 |           1.701 |
-|    5 | **MezzioRadixRouterCached**  | No OPcache         |       360,036 |     1454.8 |           3.718 |
-|    6 | **MezzioRadixRouter**        | No OPcache         |       319,183 |     1272.4 |           2.792 |
-|    7 | **MezzioFastRouteCached**    | JIT=tracing        |        31,814 |      236.8 |           0.443 |
-|    8 | **MezzioFastRouteCached**    | No OPcache         |        27,736 |      956.6 |           2.986 |
-|    9 | **MezzioFastRouteCached**    | OPcache            |        23,841 |      236.8 |           0.497 |
-|   10 | **MezzioFastRoute**          | JIT=tracing        |        11,494 |      427.0 |           2.885 |
-|   11 | **MezzioFastRoute**          | OPcache            |         9,488 |      421.2 |           3.559 |
-|   12 | **MezzioFastRoute**          | No OPcache         |         9,265 |      974.7 |           5.815 |
-|   13 | **MezzioLaminasRouter**      | JIT=tracing        |         5,712 |     1649.6 |           3.005 |
-|   14 | **MezzioLaminasRouter**      | OPcache            |         4,534 |     1609.8 |           3.990 |
-|   15 | **MezzioLaminasRouter**      | No OPcache         |         4,292 |     2939.5 |          13.165 |
+|    1 | **MezzioRadixRouterCached**  | JIT=tracing        |       924,252 |      258.6 |           0.268 |
+|    2 | **MezzioRadixRouter**        | JIT=tracing        |       889,857 |      793.2 |           0.731 |
+|    3 | **MezzioRadixRouter**        | OPcache            |       671,473 |      793.2 |           1.071 |
+|    4 | **MezzioRadixRouterCached**  | OPcache            |       646,639 |      258.6 |           0.334 |
+|    5 | **MezzioRadixRouter**        | No OPcache         |       623,333 |     1269.4 |           1.650 |
+|    6 | **MezzioRadixRouterCached**  | No OPcache         |       563,701 |     1451.8 |           2.354 |
+|    7 | **MezzioFastRouteCached**    | JIT=tracing        |        52,771 |      236.8 |           0.457 |
+|    8 | **MezzioFastRouteCached**    | OPcache            |        45,111 |      236.7 |           0.319 |
+|    9 | **MezzioFastRouteCached**    | No OPcache         |        43,311 |      953.1 |           2.326 |
+|   10 | **MezzioFastRoute**          | JIT=tracing        |        20,571 |      427.0 |           1.768 |
+|   11 | **MezzioFastRoute**          | OPcache            |        16,300 |      421.2 |           2.120 |
+|   12 | **MezzioFastRoute**          | No OPcache         |        15,433 |      971.3 |           3.605 |
+|   13 | **MezzioLaminasRouter**      | JIT=tracing        |         9,741 |     1627.9 |           2.002 |
+|   14 | **MezzioLaminasRouter**      | OPcache            |         7,635 |     1596.8 |           2.635 |
+|   15 | **MezzioLaminasRouter**      | No OPcache         |         7,425 |     2928.5 |           8.540 |
 
 #### bitbucket (177 routes)
 
 | Rank | Router                       | Mode               | Lookups/sec   | Mem (KB)   | Register (ms)   |
 |------|------------------------------|--------------------|---------------|------------|-----------------|
-|    1 | **MezzioRadixRouter**        | JIT=tracing        |       472,465 |      633.6 |           1.531 |
-|    2 | **MezzioRadixRouterCached**  | JIT=tracing        |       398,965 |      196.2 |           0.353 |
-|    3 | **MezzioRadixRouter**        | OPcache            |       361,099 |      633.6 |           1.794 |
-|    4 | **MezzioRadixRouterCached**  | OPcache            |       358,660 |      196.2 |           0.373 |
-|    5 | **MezzioRadixRouter**        | No OPcache         |       311,773 |     1109.8 |           2.739 |
-|    6 | **MezzioRadixRouterCached**  | No OPcache         |       282,078 |     1259.5 |           3.484 |
-|    7 | **MezzioFastRouteCached**    | JIT=tracing        |        38,953 |      175.8 |           0.348 |
-|    8 | **MezzioFastRouteCached**    | OPcache            |        33,755 |      175.8 |           0.382 |
-|    9 | **MezzioFastRouteCached**    | No OPcache         |        32,031 |      893.0 |           3.533 |
-|   10 | **MezzioFastRoute**          | JIT=tracing        |        13,234 |      368.5 |           1.384 |
-|   11 | **MezzioFastRoute**          | OPcache            |        10,867 |      367.8 |           1.694 |
-|   12 | **MezzioFastRoute**          | No OPcache         |        10,706 |      918.2 |           3.794 |
-|   13 | **MezzioLaminasRouter**      | JIT=tracing        |         7,783 |     1288.6 |           3.284 |
-|   14 | **MezzioLaminasRouter**      | OPcache            |         6,422 |     1288.6 |           3.938 |
-|   15 | **MezzioLaminasRouter**      | No OPcache         |         6,260 |     2615.1 |          14.084 |
+|    1 | **MezzioRadixRouterCached**  | JIT=tracing        |       824,823 |      196.2 |           0.194 |
+|    2 | **MezzioRadixRouter**        | JIT=tracing        |       766,894 |      633.6 |           0.730 |
+|    3 | **MezzioRadixRouterCached**  | OPcache            |       597,144 |      196.2 |           0.203 |
+|    4 | **MezzioRadixRouter**        | OPcache            |       589,009 |      633.6 |           0.871 |
+|    5 | **MezzioRadixRouter**        | No OPcache         |       524,533 |     1106.7 |           1.526 |
+|    6 | **MezzioRadixRouterCached**  | No OPcache         |       514,334 |     1256.5 |           2.091 |
+|    7 | **MezzioFastRouteCached**    | JIT=tracing        |        63,578 |      175.7 |           0.221 |
+|    8 | **MezzioFastRouteCached**    | No OPcache         |        52,280 |      889.5 |           1.909 |
+|    9 | **MezzioFastRouteCached**    | OPcache            |        49,705 |      175.7 |           0.272 |
+|   10 | **MezzioFastRoute**          | JIT=tracing        |        20,344 |      368.5 |           0.783 |
+|   11 | **MezzioFastRoute**          | No OPcache         |        16,401 |      914.8 |           2.493 |
+|   12 | **MezzioFastRoute**          | OPcache            |        16,167 |      367.8 |           1.121 |
+|   13 | **MezzioLaminasRouter**      | JIT=tracing        |        13,024 |     1276.0 |           1.528 |
+|   14 | **MezzioLaminasRouter**      | OPcache            |        10,422 |     1275.5 |           2.518 |
+|   15 | **MezzioLaminasRouter**      | No OPcache         |         9,379 |     2604.1 |           8.419 |
 
 #### huge (500 routes)
 
 | Rank | Router                       | Mode               | Lookups/sec   | Mem (KB)   | Register (ms)   |
 |------|------------------------------|--------------------|---------------|------------|-----------------|
-|    1 | **MezzioRadixRouterCached**  | JIT=tracing        |       477,316 |      496.2 |           0.752 |
-|    2 | **MezzioRadixRouter**        | JIT=tracing        |       408,837 |     2244.5 |           3.080 |
-|    3 | **MezzioRadixRouterCached**  | OPcache            |       365,009 |      496.2 |           0.856 |
-|    4 | **MezzioRadixRouter**        | OPcache            |       312,791 |     2244.5 |           3.839 |
-|    5 | **MezzioRadixRouter**        | No OPcache         |       312,198 |     2737.9 |           4.978 |
-|    6 | **MezzioRadixRouterCached**  | No OPcache         |       305,372 |     3056.3 |           7.030 |
-|    7 | **MezzioFastRouteCached**    | JIT=tracing        |        16,193 |      449.5 |           0.884 |
-|    8 | **MezzioFastRouteCached**    | OPcache            |        15,054 |      449.4 |           0.948 |
-|    9 | **MezzioFastRouteCached**    | No OPcache         |        14,226 |     1455.2 |           4.808 |
-|   10 | **MezzioFastRoute**          | JIT=tracing        |         4,256 |      969.1 |           3.582 |
-|   11 | **MezzioFastRoute**          | OPcache            |         3,930 |      969.0 |           4.233 |
-|   12 | **MezzioFastRoute**          | No OPcache         |         3,851 |     1536.6 |           6.150 |
-|   13 | **MezzioLaminasRouter**      | JIT=tracing        |         3,074 |     3224.2 |           6.834 |
-|   14 | **MezzioLaminasRouter**      | OPcache            |         2,136 |     3224.2 |           8.338 |
-|   15 | **MezzioLaminasRouter**      | No OPcache         |         1,871 |     4568.0 |          19.315 |
+|    1 | **MezzioRadixRouterCached**  | JIT=tracing        |       826,967 |      496.1 |           0.468 |
+|    2 | **MezzioRadixRouter**        | JIT=tracing        |       774,455 |     2244.5 |           1.626 |
+|    3 | **MezzioRadixRouterCached**  | OPcache            |       613,734 |      496.1 |           0.506 |
+|    4 | **MezzioRadixRouter**        | OPcache            |       592,844 |     2244.5 |           2.086 |
+|    5 | **MezzioRadixRouter**        | No OPcache         |       539,251 |     2734.9 |           2.970 |
+|    6 | **MezzioRadixRouterCached**  | No OPcache         |       481,211 |     3053.3 |           4.739 |
+|    7 | **MezzioFastRouteCached**    | JIT=tracing        |        24,424 |      449.4 |           0.411 |
+|    8 | **MezzioFastRouteCached**    | OPcache            |        23,511 |      449.4 |           0.480 |
+|    9 | **MezzioFastRouteCached**    | No OPcache         |        21,829 |     1451.8 |           2.610 |
+|   10 | **MezzioFastRoute**          | JIT=tracing        |         7,132 |      969.1 |           1.355 |
+|   11 | **MezzioFastRoute**          | OPcache            |         6,048 |      969.0 |           1.814 |
+|   12 | **MezzioFastRoute**          | No OPcache         |         5,798 |     1533.2 |           3.384 |
+|   13 | **MezzioLaminasRouter**      | JIT=tracing        |         5,042 |     3211.2 |           3.706 |
+|   14 | **MezzioLaminasRouter**      | No OPcache         |         3,944 |     4556.9 |          11.058 |
+|   15 | **MezzioLaminasRouter**      | OPcache            |         3,840 |     3211.2 |           5.156 |
 
 ## Performance Summary
-
-### Speed Comparison (No OPcache, simple suite)
-
-| Router | Lookups/sec | vs FastRoute | vs LaminasRouter |
-|--------|-------------|--------------|-----------------|
-| MezzioRadixRouterCached | ~414,000 | **3x faster** | **16x faster** |
-| MezzioRadixRouter | ~383,000 | **3x faster** | **15x faster** |
-| MezzioFastRouteCached | ~132,000 | baseline | ~5x faster |
-| MezzioFastRoute | ~65,000 | - | ~2.5x faster |
-| MezzioLaminasRouter | ~25,000 | - | baseline |
 
 ### Key Findings
 

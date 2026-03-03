@@ -144,13 +144,13 @@ For detailed results and methodology, see [benchmark-comparison/README.md](./ben
 
 | Rank | Router                       | Lookups/sec   | Mem (KB)   | Register (ms)   |
 |------|------------------------------|---------------|------------|-----------------|
-|    1 | **MezzioRadixRouterCached**  |       668,375 |       44.9 |           0.128 |
-|    2 | **MezzioRadixRouter**        |       645,693 |      178.7 |           0.191 |
-|    3 | **MezzioFastRouteCached**    |       162,389 |       42.7 |           0.164 |
-|    4 | **MezzioFastRoute**          |        81,157 |      137.6 |           0.310 |
-|    5 | **MezzioLaminasRouter**      |        30,157 |      367.4 |           0.707 |
+|    1 | **MezzioRadixRouterCached**  |     1,279,430 |       45.1 |           0.073 |
+|    2 | **MezzioRadixRouter**        |     1,256,213 |      178.7 |           0.149 |
+|    3 | **MezzioFastRouteCached**    |       294,001 |       42.9 |           0.111 |
+|    4 | **MezzioFastRoute**          |       137,812 |      137.6 |           0.194 |
+|    5 | **MezzioLaminasRouter**      |        56,560 |      371.0 |           0.483 |
 
-MezzioRadixRouter is **~4x faster** than FastRoute and **~22x faster** than LaminasRouter in this test.
+MezzioRadixRouter is **~9x faster** than FastRoute and **~22x faster** than LaminasRouter in this test.
 
 ## License
 
