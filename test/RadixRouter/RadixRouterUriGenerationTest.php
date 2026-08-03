@@ -24,9 +24,9 @@ class RadixRouterUriGenerationTest extends BaseRadixRouterTest
             $this->router->addRoute($route);
         }
 
-        $name = $generateArgs['name'];
+        $name          = $generateArgs['name'];
         $substitutions = $generateArgs['substitutions'] ?? [];
-        $options = $generateArgs['options'] ?? [];
+        $options       = $generateArgs['options'] ?? [];
 
         $uri = $this->router->generateUri($name, $substitutions, $options);
         $this->assertSame($expected, $uri);
@@ -58,7 +58,7 @@ class RadixRouterUriGenerationTest extends BaseRadixRouterTest
         $this->router->addRoute($route);
 
         $request = $this->createGetRequest('/foo%20bar');
-        $result = $this->router->match($request);
+        $result  = $this->router->match($request);
 
         $this->assertRouteMatches($result, 'foo-bar');
     }
@@ -69,11 +69,11 @@ class RadixRouterUriGenerationTest extends BaseRadixRouterTest
         $this->router->addRoute($route);
 
         $request1 = $this->createGetRequest('/user');
-        $result1 = $this->router->match($request1);
+        $result1  = $this->router->match($request1);
         $this->assertRouteMatches($result1, 'user');
 
         $request2 = $this->createGetRequest('/user/');
-        $result2 = $this->router->match($request2);
+        $result2  = $this->router->match($request2);
         $this->assertRouteMatches($result2, 'user');
 
         $this->assertSame($result1->getMatchedRoute(), $result2->getMatchedRoute());
@@ -81,18 +81,18 @@ class RadixRouterUriGenerationTest extends BaseRadixRouterTest
 
     public function testMultipleRoutesWithSamePathDifferentMethods(): void
     {
-        $getRoute = RouteBuilder::simple('/api/data', 'get-data');
+        $getRoute  = RouteBuilder::simple('/api/data', 'get-data');
         $postRoute = RouteBuilder::post('/api/data', 'post-data');
 
         $this->router->addRoute($getRoute);
         $this->router->addRoute($postRoute);
 
         $getRequest = $this->createGetRequest('/api/data');
-        $getResult = $this->router->match($getRequest);
+        $getResult  = $this->router->match($getRequest);
         $this->assertRouteMatches($getResult, 'get-data');
 
         $postRequest = $this->createPostRequest('/api/data');
-        $postResult = $this->router->match($postRequest);
+        $postResult  = $this->router->match($postRequest);
         $this->assertRouteMatches($postResult, 'post-data');
     }
 
@@ -102,15 +102,15 @@ class RadixRouterUriGenerationTest extends BaseRadixRouterTest
         $this->router->addRoute($route);
 
         $getRequest = $this->createGetRequest('/api/data');
-        $getResult = $this->router->match($getRequest);
+        $getResult  = $this->router->match($getRequest);
         $this->assertRouteMatches($getResult, 'api-data');
 
         $postRequest = $this->createPostRequest('/api/data');
-        $postResult = $this->router->match($postRequest);
+        $postResult  = $this->router->match($postRequest);
         $this->assertRouteMatches($postResult, 'api-data');
 
         $putRequest = $this->createPutRequest('/api/data');
-        $putResult = $this->router->match($putRequest);
+        $putResult  = $this->router->match($putRequest);
         $this->assertMethodNotAllowed($putResult, [RequestMethod::METHOD_GET, RequestMethod::METHOD_HEAD, RequestMethod::METHOD_POST]);
     }
 }

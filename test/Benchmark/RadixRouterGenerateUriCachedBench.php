@@ -46,7 +46,7 @@ class RadixRouterGenerateUriCachedBench
 
         $this->router = new RadixRouter(config: [
             CacheConfig::Enabled->value => true,
-            CacheConfig::File->value => $this->cacheFile,
+            CacheConfig::File->value    => $this->cacheFile,
         ]);
 
         $this->router->addRoute(new Route('/api/users', $this->getMiddleware(), [RequestMethod::METHOD_GET], 'users.list'));
@@ -83,7 +83,9 @@ class RadixRouterGenerateUriCachedBench
     #[Iterations(5)]
     public function benchGenerateUriWithSingleParameter(): void
     {
-        $this->router->generateUri('users.get', ['id' => '123']);
+        $this->router->generateUri('users.get', [
+            'id' => '123',
+        ]);
     }
 
     /**
@@ -94,7 +96,7 @@ class RadixRouterGenerateUriCachedBench
     public function benchGenerateUriWithMultipleParameters(): void
     {
         $this->router->generateUri('posts.comments.get', [
-            'id' => '123',
+            'id'        => '123',
             'commentId' => '456',
         ]);
     }
@@ -106,7 +108,9 @@ class RadixRouterGenerateUriCachedBench
     #[Iterations(5)]
     public function benchGenerateUriWithOptionalParameterProvided(): void
     {
-        $this->router->generateUri('search', ['query' => 'php']);
+        $this->router->generateUri('search', [
+            'query' => 'php',
+        ]);
     }
 
     /**
@@ -127,7 +131,7 @@ class RadixRouterGenerateUriCachedBench
     public function benchGenerateUriWithMultipleOptionalParameters(): void
     {
         $this->router->generateUri('filter', [
-            'category' => 'electronics',
+            'category'    => 'electronics',
             'subcategory' => 'laptops',
         ]);
     }
@@ -140,7 +144,7 @@ class RadixRouterGenerateUriCachedBench
     public function benchGenerateUriWithSomeOptionalParametersOmitted(): void
     {
         $this->router->generateUri('articles', [
-            'year' => '2023',
+            'year'  => '2023',
             'month' => '06',
             // day and slug omitted
         ]);

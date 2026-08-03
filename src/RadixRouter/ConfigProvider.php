@@ -26,7 +26,7 @@ final class ConfigProvider
     public function getDependencies(): array
     {
         return [
-            'aliases' => [
+            'aliases'   => [
                 RouterInterface::class => RadixRouter::class,
             ],
             'factories' => [

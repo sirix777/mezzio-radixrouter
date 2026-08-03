@@ -28,7 +28,7 @@ class RadixRouterAddRouteBench
 
     public function setUp(): void
     {
-        $this->router = new RadixRouter();
+        $this->router     = new RadixRouter();
         $this->middleware = $this->getMiddleware();
     }
 

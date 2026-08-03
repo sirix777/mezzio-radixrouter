@@ -85,25 +85,39 @@ trait RouteDataProviders
         yield 'simple' => [
             [['/foo', 'foo', [RequestMethod::METHOD_GET]]],
             '/foo',
-            ['name' => 'foo'],
+            [
+                'name' => 'foo',
+            ],
         ];
 
         yield 'with-param' => [
             [['/foo/:id', 'foo', [RequestMethod::METHOD_GET]]],
             '/foo/123',
-            ['name' => 'foo', 'substitutions' => ['id' => '123']],
+            [
+                'name'          => 'foo',
+                'substitutions' => [
+                    'id' => '123',
+                ],
+            ],
         ];
 
         yield 'with-optional-param-present' => [
             [['/foo/:id?', 'foo', [RequestMethod::METHOD_GET]]],
             '/foo/123',
-            ['name' => 'foo', 'substitutions' => ['id' => '123']],
+            [
+                'name'          => 'foo',
+                'substitutions' => [
+                    'id' => '123',
+                ],
+            ],
         ];
 
         yield 'with-optional-param-absent' => [
             [['/foo/:id?', 'foo', [RequestMethod::METHOD_GET]]],
             '/foo',
-            ['name' => 'foo'],
+            [
+                'name' => 'foo',
+            ],
         ];
     }
 }

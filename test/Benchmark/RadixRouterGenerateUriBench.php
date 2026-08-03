@@ -62,7 +62,9 @@ class RadixRouterGenerateUriBench
     #[Iterations(5)]
     public function benchGenerateUriWithSingleParameter(): void
     {
-        $this->router->generateUri('users.get', ['id' => '123']);
+        $this->router->generateUri('users.get', [
+            'id' => '123',
+        ]);
     }
 
     /**
@@ -73,7 +75,7 @@ class RadixRouterGenerateUriBench
     public function benchGenerateUriWithMultipleParameters(): void
     {
         $this->router->generateUri('posts.comments.get', [
-            'id' => '123',
+            'id'        => '123',
             'commentId' => '456',
         ]);
     }
@@ -85,7 +87,9 @@ class RadixRouterGenerateUriBench
     #[Iterations(5)]
     public function benchGenerateUriWithOptionalParameterProvided(): void
     {
-        $this->router->generateUri('search', ['query' => 'php']);
+        $this->router->generateUri('search', [
+            'query' => 'php',
+        ]);
     }
 
     /**
@@ -106,7 +110,7 @@ class RadixRouterGenerateUriBench
     public function benchGenerateUriWithMultipleOptionalParameters(): void
     {
         $this->router->generateUri('filter', [
-            'category' => 'electronics',
+            'category'    => 'electronics',
             'subcategory' => 'laptops',
         ]);
     }
@@ -119,7 +123,7 @@ class RadixRouterGenerateUriBench
     public function benchGenerateUriWithSomeOptionalParametersOmitted(): void
     {
         $this->router->generateUri('articles', [
-            'year' => '2023',
+            'year'  => '2023',
             'month' => '06',
             // day and slug omitted
         ]);

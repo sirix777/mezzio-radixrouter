@@ -18,7 +18,7 @@ class RadixRouterFactoryTest extends TestCase
         $container->method('has')->with('config')->willReturn(false);
 
         $factory = new RadixRouterFactory();
-        $router = $factory($container);
+        $router  = $factory($container);
 
         $this->assertInstanceOf(RadixRouter::class, $router);
     }
@@ -32,7 +32,7 @@ class RadixRouterFactoryTest extends TestCase
         $container->method('get')->with('config')->willReturn($config);
 
         $factory = new RadixRouterFactory();
-        $router = $factory($container);
+        $router  = $factory($container);
 
         $this->assertInstanceOf(RadixRouter::class, $router);
     }
@@ -46,7 +46,7 @@ class RadixRouterFactoryTest extends TestCase
         $container->method('get')->with('config')->willReturn($config);
 
         $factory = new RadixRouterFactory();
-        $router = $factory($container);
+        $router  = $factory($container);
 
         $this->assertInstanceOf(RadixRouter::class, $router);
     }
@@ -67,7 +67,7 @@ class RadixRouterFactoryTest extends TestCase
             'router' => [
                 'radix' => [
                     CacheConfig::Enabled->value => $cacheEnabled,
-                    CacheConfig::File->value => __DIR__ . '/radix-router.cache.php',
+                    CacheConfig::File->value    => __DIR__ . '/radix-router.cache.php',
                 ],
             ],
         ];

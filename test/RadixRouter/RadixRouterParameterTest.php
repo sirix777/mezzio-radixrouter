@@ -19,9 +19,11 @@ class RadixRouterParameterTest extends BaseRadixRouterTest
         $this->router->addRoute($route);
 
         $request = $this->createGetRequest('/user/123');
-        $result = $this->router->match($request);
+        $result  = $this->router->match($request);
 
-        $this->assertRouteMatches($result, 'user-get', ['id' => '123']);
+        $this->assertRouteMatches($result, 'user-get', [
+            'id' => '123',
+        ]);
     }
 
     public function testMatchWithMultipleRouteParameters(): void
@@ -30,9 +32,12 @@ class RadixRouterParameterTest extends BaseRadixRouterTest
         $this->router->addRoute($route);
 
         $request = $this->createGetRequest('/user/123/post/456');
-        $result = $this->router->match($request);
+        $result  = $this->router->match($request);
 
-        $this->assertRouteMatches($result, 'user-post', ['id' => '123', 'postId' => '456']);
+        $this->assertRouteMatches($result, 'user-post', [
+            'id'     => '123',
+            'postId' => '456',
+        ]);
     }
 
     public function testGenerateUriRaisesExceptionForMissingMandatoryParameters(): void
@@ -50,7 +55,9 @@ class RadixRouterParameterTest extends BaseRadixRouterTest
         $route = RouteBuilder::withParams('/user/:id/posts/:postId?', 'user-posts');
         $this->router->addRoute($route);
 
-        $uri = $this->router->generateUri('user-posts', ['id' => '123']);
+        $uri = $this->router->generateUri('user-posts', [
+            'id' => '123',
+        ]);
         $this->assertSame('/user/123/posts', $uri);
     }
 
@@ -70,9 +77,18 @@ class RadixRouterParameterTest extends BaseRadixRouterTest
         $this->router->addRoute($route);
 
         $this->assertSame('/archive', $this->router->generateUri('archive'));
-        $this->assertSame('/archive/2023', $this->router->generateUri('archive', ['year' => '2023']));
-        $this->assertSame('/archive/2023/06', $this->router->generateUri('archive', ['year' => '2023', 'month' => '06']));
-        $this->assertSame('/archive/2023/06/15', $this->router->generateUri('archive', ['year' => '2023', 'month' => '06', 'day' => '15']));
+        $this->assertSame('/archive/2023', $this->router->generateUri('archive', [
+            'year' => '2023',
+        ]));
+        $this->assertSame('/archive/2023/06', $this->router->generateUri('archive', [
+            'year'  => '2023',
+            'month' => '06',
+        ]));
+        $this->assertSame('/archive/2023/06/15', $this->router->generateUri('archive', [
+            'year'  => '2023',
+            'month' => '06',
+            'day'   => '15',
+        ]));
     }
 
     #[DataProvider('parametricRoutesProvider')]
@@ -99,7 +115,7 @@ class RadixRouterParameterTest extends BaseRadixRouterTest
         $paramPath = str_replace('?', '', $paramPath); // Remove optional marker
 
         $request = $this->createGetRequest($paramPath);
-        $result = $this->router->match($request);
+        $result  = $this->router->match($request);
 
         $this->assertRoute($result)
             ->shouldSucceed()

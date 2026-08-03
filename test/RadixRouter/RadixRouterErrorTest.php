@@ -70,7 +70,7 @@ class RadixRouterErrorTest extends BaseRadixRouterTest
         $this->router->addRoute($route);
 
         $request = $this->createGetRequest('/bar');
-        $result = $this->router->match($request);
+        $result  = $this->router->match($request);
 
         $this->assertRouteNotFound($result);
     }
@@ -81,7 +81,7 @@ class RadixRouterErrorTest extends BaseRadixRouterTest
         $this->router->addRoute($route);
 
         $request = $this->createGetRequest('/foo');
-        $result = $this->router->match($request);
+        $result  = $this->router->match($request);
 
         $this->assertMethodNotAllowed($result, [RequestMethod::METHOD_POST]);
     }
@@ -92,7 +92,7 @@ class RadixRouterErrorTest extends BaseRadixRouterTest
         $this->router->addRoute($route);
 
         $request = $this->createGetRequest('/foo');
-        $result = $this->router->match($request);
+        $result  = $this->router->match($request);
 
         $this->assertMethodNotAllowed($result, [RequestMethod::METHOD_POST, RequestMethod::METHOD_PUT]);
     }

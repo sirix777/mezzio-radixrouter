@@ -34,7 +34,7 @@ class BaseRadixRouterTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->router = new RadixRouter();
+        $this->router     = new RadixRouter();
         $this->middleware = $this->createMockMiddleware();
         RouteBuilder::setDefaultMiddleware($this->middleware);
     }

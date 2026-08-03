@@ -125,14 +125,14 @@ class RadixRouter implements RouterInterface
     {
         $this->injectRoutes();
 
-        $path = rawurldecode($request->getUri()->getPath());
+        $path   = rawurldecode($request->getUri()->getPath());
         $method = $request->getMethod();
 
         $result = $this->router->lookup($method, $path);
 
         return match ($result['code']) {
-            200 => $this->marshalMatchedRoute($result),
-            405 => $this->marshalMethodNotAllowedResult($result),
+            200     => $this->marshalMatchedRoute($result),
+            405     => $this->marshalMethodNotAllowedResult($result),
             default => RouteResult::fromRouteFailure(null),
         };
     }
@@ -160,7 +160,7 @@ class RadixRouter implements RouterInterface
         }
 
         $route = $this->routes[$name];
-        $path = $route->getPath();
+        $path  = $route->getPath();
 
         [$paramNames, $paramModifiers] = $this->extractRouteParameters($path);
         $this->validateRequiredParameters($paramNames, $paramModifiers, $substitutions, $route->getName());
@@ -227,16 +227,16 @@ class RadixRouter implements RouterInterface
      */
     private function replacePathParameters(string $path, array $paramNames, array $substitutions): string
     {
-        $patterns = [];
+        $patterns     = [];
         $replacements = [];
 
         foreach ($paramNames as $param) {
             if (isset($substitutions[$param])) {
-                $patterns[] = sprintf('/:(%s)(\?|\*)?/', preg_quote($param));
+                $patterns[]     = sprintf('/:(%s)(\?|\*)?/', preg_quote($param));
                 $replacements[] = $substitutions[$param];
             } else {
                 // For optional parameters not provided, mark for removal
-                $patterns[] = sprintf('/:(%s)(\?|\*)/', preg_quote($param));
+                $patterns[]     = sprintf('/:(%s)(\?|\*)/', preg_quote($param));
                 $replacements[] = '';
             }
         }
@@ -261,7 +261,7 @@ class RadixRouter implements RouterInterface
     {
         // Clean up the path - remove duplicate slashes
         $result = preg_replace(['#/+#', '#/+$#'], ['/', ''], $path);
-        $path = $result ?? $path;
+        $path   = $result ?? $path;
 
         // Ensure root path has a leading slash
         if ('' === $path) {
@@ -316,7 +316,7 @@ class RadixRouter implements RouterInterface
         $this->routesToInject = [];
 
         if ([] !== $this->dispatchData) {
-            $this->router->tree = $this->dispatchData['tree'] ?? [];
+            $this->router->tree   = $this->dispatchData['tree'] ?? [];
             $this->router->static = $this->dispatchData['static'] ?? [];
 
             return;
@@ -399,7 +399,7 @@ class RadixRouter implements RouterInterface
             return;
         }
 
-        $this->hasCache = true;
+        $this->hasCache     = true;
         $this->dispatchData = $dispatchData;
     }
 
@@ -413,7 +413,7 @@ class RadixRouter implements RouterInterface
         }
 
         $dispatchData = [
-            'tree' => $this->router->tree,
+            'tree'   => $this->router->tree,
             'static' => $this->router->static,
         ];
 

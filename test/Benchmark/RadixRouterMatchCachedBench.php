@@ -48,7 +48,7 @@ class RadixRouterMatchCachedBench
 
         $this->router = new RadixRouter(config: [
             CacheConfig::Enabled->value => true,
-            CacheConfig::File->value => $this->cacheFile,
+            CacheConfig::File->value    => $this->cacheFile,
         ]);
 
         $this->router->addRoute(new Route('/api/users', $this->getMiddleware(), [RequestMethod::METHOD_GET], 'users.list'));

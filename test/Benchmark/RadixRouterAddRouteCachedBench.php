@@ -50,7 +50,7 @@ class RadixRouterAddRouteCachedBench
         // Initialize router with caching enabled
         $this->router = new RadixRouter(config: [
             CacheConfig::Enabled->value => true,
-            CacheConfig::File->value => $this->cacheFile,
+            CacheConfig::File->value    => $this->cacheFile,
         ]);
 
         $this->middleware = $this->getMiddleware();

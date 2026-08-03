@@ -21,7 +21,7 @@ class RadixRouterBasicTest extends BaseRadixRouterTest
         $this->router->addRoute($route);
 
         $request = $this->createGetRequest('/foo');
-        $result = $this->router->match($request);
+        $result  = $this->router->match($request);
 
         $this->assertRouteMatches($result, $route->getName());
         $this->assertSame($route, $result->getMatchedRoute());
@@ -33,7 +33,7 @@ class RadixRouterBasicTest extends BaseRadixRouterTest
         $this->router->addRoute($route);
 
         $request = $this->createGetRequest('/foo');
-        $result = $this->router->match($request);
+        $result  = $this->router->match($request);
 
         $this->assertRoute($result)
             ->shouldSucceed()
@@ -47,7 +47,7 @@ class RadixRouterBasicTest extends BaseRadixRouterTest
         $this->router->addRoute($route);
 
         $request = $this->createServerRequest('/foo', RequestMethod::METHOD_HEAD);
-        $result = $this->router->match($request);
+        $result  = $this->router->match($request);
 
         $this->assertRoute($result)
             ->shouldSucceed()
@@ -61,7 +61,7 @@ class RadixRouterBasicTest extends BaseRadixRouterTest
         $this->router->addRoute($route);
 
         $request = $this->createGetRequest('/foo');
-        $result = $this->router->match($request);
+        $result  = $this->router->match($request);
 
         $this->assertMethodNotAllowed($result, [RequestMethod::METHOD_POST]);
     }
@@ -72,7 +72,7 @@ class RadixRouterBasicTest extends BaseRadixRouterTest
         $this->router->addRoute($route);
 
         $request = $this->createGetRequest('/bar');
-        $result = $this->router->match($request);
+        $result  = $this->router->match($request);
 
         $this->assertRouteNotFound($result);
     }
@@ -109,7 +109,7 @@ class RadixRouterBasicTest extends BaseRadixRouterTest
         $this->router->addRoute($route);
 
         $request = $this->createGetRequest('/foo');
-        $result = $this->router->match($request);
+        $result  = $this->router->match($request);
 
         $this->assertRouteMatches($result, 'foo-any');
     }
@@ -125,7 +125,7 @@ class RadixRouterBasicTest extends BaseRadixRouterTest
     public function testPathNormalization(string $inputPath, string $expectedPath): void
     {
         // Ensure we always have a non-empty string for the Route constructor
-        $path = '' === $inputPath ? '/' : $inputPath;
+        $path  = '' === $inputPath ? '/' : $inputPath;
         $route = new Route($path, $this->middleware, [RequestMethod::METHOD_GET], 'test');
         $this->router->addRoute($route);
 
@@ -136,7 +136,7 @@ class RadixRouterBasicTest extends BaseRadixRouterTest
     #[DataProvider('invalidRoutePatternsProvider')]
     public function testEmptySegmentsInRoutePatternShouldThrow(string $inputPath): void
     {
-        $path = '' === $inputPath ? '/' : $inputPath;
+        $path  = '' === $inputPath ? '/' : $inputPath;
         $route = new Route($path, $this->middleware, [RequestMethod::METHOD_GET], 'invalid');
         $this->router->addRoute($route);
 

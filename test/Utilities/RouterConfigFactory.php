@@ -17,7 +17,7 @@ class RouterConfigFactory
     {
         return [
             CacheConfig::Enabled->value => true,
-            CacheConfig::File->value => $cacheFile ?? sys_get_temp_dir() . '/test-cache.php',
+            CacheConfig::File->value    => $cacheFile ?? sys_get_temp_dir() . '/test-cache.php',
         ];
     }
 
@@ -48,7 +48,7 @@ class RouterConfigFactory
     {
         return [
             CacheConfig::Enabled->value => true,
-            CacheConfig::File->value => '/root/readonly/cache.php',
+            CacheConfig::File->value    => '/root/readonly/cache.php',
         ];
     }
 }
