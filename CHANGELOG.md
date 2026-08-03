@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.2] - 2026-08-03
+
+### Added
+- Support for `mezzio/mezzio-router` 3.20+ alongside 4.x
+- CI compatibility matrix for Mezzio Router 3.20 and 4.x on PHP 8.2 and 8.5
+
 ## [3.2.1] - 2026-03-03
 
 ### Added

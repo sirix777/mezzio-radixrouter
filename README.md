@@ -16,6 +16,11 @@ Install this package via Composer:
 composer require sirix/mezzio-radixrouter
 ```
 
+## Requirements
+
+- PHP 8.2–8.5
+- `mezzio/mezzio-router` 3.20+ or 4.x
+
 ## Features
 
 - High-performance routing using a radix tree algorithm
@@ -23,6 +28,7 @@ composer require sirix/mezzio-radixrouter
 - Supports route parameters and optional parameters
 - Route caching for improved performance
 - Fully compatible with Mezzio middleware architecture
+- Compatible with Mezzio Router 3.20+ and 4.x
 
 ## Usage
 

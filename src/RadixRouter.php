@@ -6,6 +6,7 @@ namespace Sirix\Mezzio\Router;
 
 use const E_WARNING;
 
+use InvalidArgumentException;
 use Mezzio\Router\Exception\RuntimeException;
 use Mezzio\Router\Route;
 use Mezzio\Router\RouteResult;
@@ -22,6 +23,7 @@ use function implode;
 use function in_array;
 use function is_array;
 use function is_dir;
+use function is_string;
 use function is_writable;
 use function mkdir;
 use function preg_match_all;
@@ -334,7 +336,14 @@ class RadixRouter implements RouterInterface
 
         // Convert null/empty methods to ANY
         if (null === $methods || [] === $methods) {
-            $methods = $this->router->allowedMethods;
+            $methods = [];
+            foreach ($this->router->allowedMethods as $method) {
+                if (! is_string($method)) {
+                    throw new InvalidArgumentException('Router allowed methods must be strings');
+                }
+
+                $methods[] = $method;
+            }
         }
 
         // inject HEAD
