@@ -16,6 +16,7 @@ use Sirix\Mezzio\Router\Enum\CacheConfig;
 use Sirix\Mezzio\Router\Exception\InvalidCacheDirectoryException;
 use Wilaak\Http\RadixRouter as WilaakRadixRouter;
 
+use function array_merge;
 use function dirname;
 use function file_exists;
 use function file_put_contents;
@@ -282,7 +283,10 @@ class RadixRouter implements RouterInterface
     {
         $route = &$this->routes[$result['handler']];
 
-        return RouteResult::fromRoute($route, $result['params'] ?? []);
+        $params   = $result['params'] ?? [];
+        $defaults = $route->getOptions()['defaults'] ?? [];
+
+        return RouteResult::fromRoute($route, array_merge($defaults, $params));
     }
 
     /**

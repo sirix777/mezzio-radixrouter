@@ -81,6 +81,25 @@ $app->get('/api/users/:id', [UserDetailsHandler::class], 'api.user');
 $app->post('/api/users', [CreateUserHandler::class]);
 ```
 
+#### Route default parameters
+
+Set a route's `defaults` option to include values in the matched parameters when
+the request path does not provide them:
+
+```php
+$route = $app->get('/articles/:locale?', [ArticleListHandler::class], 'articles.list');
+$route->setOptions([
+    'defaults' => [
+        'format' => 'json',
+        'locale' => 'en',
+    ],
+]);
+```
+
+For a request to `/articles`, the matched parameters contain `format: json` and
+`locale: en`. For `/articles/uk`, the captured `locale: uk` overrides the
+default, while `format: json` remains available.
+
 #### Radix-specific route patterns
 
 The Radix router supports a few convenient path patterns that may not be available in all Mezzio routers. Here are some examples:

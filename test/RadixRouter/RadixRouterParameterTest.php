@@ -13,6 +13,44 @@ use function str_replace;
 
 class RadixRouterParameterTest extends BaseRadixRouterTest
 {
+    public function testMatchIncludesRouteDefaultParameters(): void
+    {
+        $route = RouteBuilder::simple('/articles', 'articles-list');
+        $route->setOptions([
+            'defaults' => [
+                'format' => 'json',
+                'locale' => 'en',
+            ],
+        ]);
+        $this->router->addRoute($route);
+
+        $result = $this->router->match($this->createGetRequest('/articles'));
+
+        $this->assertRouteMatches($result, 'articles-list', [
+            'format' => 'json',
+            'locale' => 'en',
+        ]);
+    }
+
+    public function testMatchParametersOverrideRouteDefaultParameters(): void
+    {
+        $route = RouteBuilder::withParams('/articles/:locale', 'articles-list');
+        $route->setOptions([
+            'defaults' => [
+                'format' => 'json',
+                'locale' => 'en',
+            ],
+        ]);
+        $this->router->addRoute($route);
+
+        $result = $this->router->match($this->createGetRequest('/articles/uk'));
+
+        $this->assertRouteMatches($result, 'articles-list', [
+            'format' => 'json',
+            'locale' => 'uk',
+        ]);
+    }
+
     public function testMatchWithRouteParameters(): void
     {
         $route = RouteBuilder::withParams('/user/:id', 'user-get');
