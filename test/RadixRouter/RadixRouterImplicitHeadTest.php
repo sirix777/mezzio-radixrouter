@@ -66,7 +66,8 @@ class RadixRouterImplicitHeadTest extends BaseRadixRouterTest
 
     public function testAllowedMethodsUseDecodedPath(): void
     {
-        $this->router->addRoute(RouteBuilder::withMethods('/files/:name', ['GET'], 'file'));
+        // A static segment only matches the decoded path, unlike a parameter.
+        $this->router->addRoute(RouteBuilder::withMethods('/files/a b', ['GET'], 'file'));
 
         $this->assertMethodNotAllowed($this->matchRequest('HEAD', '/files/a%20b'), ['GET']);
     }
