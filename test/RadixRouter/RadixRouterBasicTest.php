@@ -41,7 +41,7 @@ class RadixRouterBasicTest extends BaseRadixRouterTest
         ;
     }
 
-    public function testMatchingHeadRouteShouldReturnSuccessfulRouteResultIfGetMethodIsAllowed(): void
+    public function testImplicitHeadOnGetRouteReturnsMethodFailure(): void
     {
         $route = RouteBuilder::simple('/foo', 'foo-route');
         $this->router->addRoute($route);
@@ -49,10 +49,7 @@ class RadixRouterBasicTest extends BaseRadixRouterTest
         $request = $this->createServerRequest('/foo', RequestMethod::METHOD_HEAD);
         $result  = $this->router->match($request);
 
-        $this->assertRoute($result)
-            ->shouldSucceed()
-            ->withRouteName('foo-route')
-        ;
+        $this->assertMethodNotAllowed($result, [RequestMethod::METHOD_GET]);
     }
 
     public function testMatchFailureDueToHttpMethodReturnsRouteResultWithAllowedMethods(): void

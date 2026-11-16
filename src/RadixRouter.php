@@ -16,12 +16,12 @@ use Sirix\Mezzio\Router\Enum\CacheConfig;
 use Sirix\Mezzio\Router\Exception\InvalidCacheDirectoryException;
 use Wilaak\Http\RadixRouter as WilaakRadixRouter;
 
+use function array_column;
 use function array_merge;
 use function dirname;
 use function file_exists;
 use function file_put_contents;
 use function implode;
-use function in_array;
 use function is_array;
 use function is_dir;
 use function is_string;
@@ -131,11 +131,17 @@ class RadixRouter implements RouterInterface
 
         $result = $this->router->lookup($method, $path);
 
-        return match ($result['code']) {
-            200     => $this->marshalMatchedRoute($result),
-            405     => $this->marshalMethodNotAllowedResult($result),
-            default => RouteResult::fromRouteFailure(null),
-        };
+        if (200 === $result['code'] && isset($result['handler']) && $this->routes[$result['handler']]->allowsMethod($method)) {
+            return $this->marshalMatchedRoute($result);
+        }
+
+        if (200 !== $result['code'] && 405 !== $result['code']) {
+            return RouteResult::fromRouteFailure(null);
+        }
+
+        // The underlying router answers HEAD with the GET route and adds HEAD to
+        // its allowed methods; Mezzio expects ImplicitHeadMiddleware to do that.
+        return RouteResult::fromRouteFailure(array_column($this->router->list($path), 'method'));
     }
 
     /**
@@ -290,18 +296,6 @@ class RadixRouter implements RouterInterface
     }
 
     /**
-     * Create a route result from a method not allowed result.
-     *
-     * @param array<string, mixed> $result Result from router
-     *
-     * @return RouteResult Route result
-     */
-    private function marshalMethodNotAllowedResult(array $result): RouteResult
-    {
-        return RouteResult::fromRouteFailure($result['allowed_methods'] ?? []);
-    }
-
-    /**
      * Inject routes into the underlying router.
      */
     private function injectRoutes(): void
@@ -348,11 +342,6 @@ class RadixRouter implements RouterInterface
 
                 $methods[] = $method;
             }
-        }
-
-        // inject HEAD
-        if (in_array('GET', $methods, true) && ! in_array('HEAD', $methods, true)) {
-            $methods[] = 'HEAD';
         }
 
         $this->routes[$route->getName()] = $route;

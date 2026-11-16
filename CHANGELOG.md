@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.0] - 2026-11-16
+
+### Changed
+- **BREAKING:** a `HEAD` request to a route that only allows `GET` is now a method failure, as in `mezzio-fastroute` and `mezzio-laminasrouter`. `Mezzio\Router\Middleware\ImplicitHeadMiddleware` then dispatches it as `GET` and empties the response body. Applications without that middleware in their pipeline will answer such requests with `405`; add the middleware or declare `HEAD` on the route.
+- Delete the route cache file after upgrading: a file written by 3.2.x keeps `HEAD` in the allowed methods until it is regenerated.
+- `wilaak/radix-router` minimum raised to `^3.7.1`
+
+### Fixed
+- The allowed methods of a method failure (and the `Allow` header built from them) no longer contain a `HEAD` that no route declares.
+- Registering separate `GET` and `HEAD` routes for the same path no longer throws `Route Conflict`.
+
+### Removed
+- Automatic `HEAD` injection for routes allowing `GET` (added in 3.2.0).
+
 ## [3.2.3] - 2026-09-08
 
 ### Fixed

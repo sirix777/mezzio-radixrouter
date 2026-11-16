@@ -29,6 +29,7 @@ composer require sirix/mezzio-radixrouter
 - Route caching for improved performance
 - Fully compatible with Mezzio middleware architecture
 - Compatible with Mezzio Router 3.20+ and 4.x
+- Implicit `HEAD` and `OPTIONS` handled by Mezzio's standard middleware
 
 ## Usage
 
@@ -136,6 +137,12 @@ Notes:
 - A question mark (?) makes the parameter optional.
 - An asterisk (*) after a parameter name captures the remainder of the path as a single string.
 - Use route names (third argument) as needed for URL generation or identification.
+
+### Implicit HEAD and OPTIONS
+
+The router reports only the methods a route declares. A `HEAD` request to a `GET`-only route is a method failure, which `Mezzio\Router\Middleware\ImplicitHeadMiddleware` turns into a `GET` dispatch with an empty body; `ImplicitOptionsMiddleware` answers an undeclared `OPTIONS` with the route's `Allow` header. Both are part of the default Mezzio pipeline.
+
+When a static route and a parameter route overlap, the more specific route wins: with `GET /users/me` and `HEAD /users/:id`, `HEAD /users/me` is dispatched as `GET /users/me`.
 
 ### Caching Configuration
 
