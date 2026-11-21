@@ -18,8 +18,10 @@ composer require sirix/mezzio-radixrouter
 
 ## Requirements
 
-- PHP 8.2–8.5
+- PHP 8.3–8.6
 - `mezzio/mezzio-router` 3.20+ or 4.x
+
+`mezzio/mezzio-router` 3.x allows PHP up to 8.5 only; on PHP 8.6 use `mezzio/mezzio-router` 4.3 or newer.
 
 ## Features
 
