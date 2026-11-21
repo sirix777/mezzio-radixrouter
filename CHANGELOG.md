@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Supported PHP window is now 8.3–8.6 (8.6 added, 8.2 dropped)
+- On PHP 8.6 `mezzio/mezzio-router` 4.3+ is required: 3.x and 4.0–4.2 do not allow PHP 8.6. The CI matrix skips PHP 8.6 with `mezzio-router` `^3.20`
 
 ## [4.0.0] - 2026-11-16
 
